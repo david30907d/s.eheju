@@ -52,6 +52,6 @@ for index, user_id in enumerate(range(199375, 1000, -1)):
                     json.dump(response, open('{}.json'.format(user_id), 'w'))
                     question = question_payload['question']
                     answer_option = question_payload['answer']
-                    answer_string = question_payload[answer_option]
+                    answer_string = question_payload[answer_option]['option']
 
                     all_options[question][answer_string] += 1
