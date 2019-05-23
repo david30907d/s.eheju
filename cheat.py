@@ -32,7 +32,6 @@ def initialization():
 all_options = initialization()
 json.dump(all_options, open('tmp.json', 'w'))
 
-not_sured_amount = len(all_options)
 for index, user_id in enumerate(tqdm.tqdm(range(199375, 1000, -1))):
     if index % 30 == 0:
         print('dump into answer.json')
@@ -43,8 +42,6 @@ for index, user_id in enumerate(tqdm.tqdm(range(199375, 1000, -1))):
                 user_id))
     except requests.exceptions.ConnectionError as e:
         continue
-    if not_sured_amount < 10:
-        break
 
     if response.status_code == 200:
         response = response.json()
@@ -52,18 +49,9 @@ for index, user_id in enumerate(tqdm.tqdm(range(199375, 1000, -1))):
             for question_payload in response['data']['questions']:
                 question_payload = question_payload['question']
                 if 'answer' in question_payload:
+                    json.dump(response, open(f'{user_id}.json', 'w'))
                     question = question_payload['question']
                     answer_option = question_payload['answer']
+                    answer_string = question_payload[answer_option]
 
-                    for option in ['A', 'B', 'C', 'D']:
-                        if question_payload[option][
-                                'ori_order'] == answer_option:
-                            answer_string = question_payload[option]['option']
-
-                            try:
-                                del all_options[question][answer_string]
-                            except Exception:
-                                pass
-
-                            if len(all_options[question]) == 1:
-                                not_sured_amount -= 1
+                    all_options[question][answer_string] += 1
