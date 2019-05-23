@@ -49,7 +49,7 @@ for index, user_id in enumerate(tqdm.tqdm(range(199375, 1000, -1))):
             for question_payload in response['data']['questions']:
                 question_payload = question_payload['question']
                 if 'answer' in question_payload:
-                    json.dump(response, open(f'{user_id}.json', 'w'))
+                    json.dump(response, open('{user_id}.json'.format(user_id), 'w'))
                     question = question_payload['question']
                     answer_option = question_payload['answer']
                     answer_string = question_payload[answer_option]
