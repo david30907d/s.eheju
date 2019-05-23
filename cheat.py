@@ -32,17 +32,23 @@ def initialization():
 all_options = initialization()
 json.dump(all_options, open('tmp.json', 'w'))
 
-for user_id in tqdm.tqdm(range(199999, 1000, -1)):
+not_sured_amount = len(all_options)
+for index, user_id in enumerate(tqdm.tqdm(range(199375, 1000, -1))):
+    if index % 30 == 0:
+        print('dump into answer.json')
+        json.dump(all_options, open('answer.json', 'w'))
     try:
         response = requests.get(
             f'http://s.ehejun.com/getexam.php?user_id={user_id}&exam_type=1410'
         )
     except requests.exceptions.ConnectionError as e:
         continue
+    if not_sured_amount < 10:
+        break
+
     if response.status_code == 200:
         response = response.json()
         if response['code'] == 200:
-            print('!!!!!!')
             for question_payload in response['data']['questions']:
                 question_payload = question_payload['question']
                 if 'answer' in question_payload:
@@ -53,6 +59,11 @@ for user_id in tqdm.tqdm(range(199999, 1000, -1)):
                         if question_payload[option][
                                 'ori_order'] == answer_option:
                             answer_string = question_payload[option]['option']
-                            del all_options[question][answer_string]
 
-json.dump(all_options, open('answer.json', 'w'))
+                            try:
+                                del all_options[question][answer_string]
+                            except Exception:
+                                pass
+
+                            if len(all_options[question]) == 1:
+                                not_sured_amount -= 1
