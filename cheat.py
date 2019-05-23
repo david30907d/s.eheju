@@ -11,7 +11,7 @@ import tqdm
 def initialization():
     all_options = defaultdict(dict)
     response = requests.get(
-        f'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1410').json(
+        'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1410').json(
         )
     for question_payload in response['data']['questions']:
         question_payload = question_payload['question']
@@ -39,8 +39,8 @@ for index, user_id in enumerate(tqdm.tqdm(range(199375, 1000, -1))):
         json.dump(all_options, open('answer.json', 'w'))
     try:
         response = requests.get(
-            f'http://s.ehejun.com/getexam.php?user_id={user_id}&exam_type=1410'
-        )
+            'http://s.ehejun.com/getexam.php?user_id={}&exam_type=1410'.format(
+                user_id))
     except requests.exceptions.ConnectionError as e:
         continue
     if not_sured_amount < 10:
