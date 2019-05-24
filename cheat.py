@@ -10,8 +10,10 @@ import tqdm
 
 def initialization():
     all_options = defaultdict(dict)
+    # exam_id:1 use exam_type 1410
+    # exam_id:2 use exam_type 1430
     response = requests.get(
-        'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1410').json(
+        'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1430').json(
         )
     for question_payload in response['data']['questions']:
         question_payload = question_payload['question']
@@ -38,7 +40,7 @@ for index, user_id in enumerate(range(199375, 1000, -1)):
         json.dump(all_options, open('answer.json', 'w'))
     try:
         response = requests.get(
-            'http://s.ehejun.com/getexam.php?user_id={}&exam_type=1410'.format(
+            'http://s.ehejun.com/getexam.php?user_id={}&exam_type=1430'.format(
                 user_id))
     except requests.exceptions.ConnectionError as e:
         continue
