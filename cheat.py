@@ -12,8 +12,9 @@ def initialization():
     all_options = defaultdict(dict)
     # exam_id:1 use exam_type 1410
     # exam_id:2 use exam_type 1430
+    # exam_id:3 use exam_type 1450
     response = requests.get(
-        'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1430').json(
+        'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1450').json(
         )
     for question_payload in response['data']['questions']:
         question_payload = question_payload['question']
