@@ -43,7 +43,7 @@ for index, user_id in enumerate(range(199375, 1000, -1)):
         response = requests.get(
             'http://s.ehejun.com/getexam.php?user_id={}&exam_type=1430'.format(
                 user_id))
-    except requests.exceptions.ConnectionError as e:
+    except Exception as e:
         continue
 
     if response.status_code == 200:
