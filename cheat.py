@@ -13,8 +13,9 @@ def initialization():
     # exam_id:1 use exam_type 1410
     # exam_id:2 use exam_type 1430
     # exam_id:3 use exam_type 1450
+    # exam_id:4 use exam_type 1630
     response = requests.get(
-        'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1450').json(
+        'http://s.ehejun.com/getexam.php?user_id=192371&exam_type=1630').json(
         )
     for question_payload in response['data']['questions']:
         question_payload = question_payload['question']
@@ -41,7 +42,7 @@ for index, user_id in enumerate(range(199375, 1000, -1)):
         json.dump(all_options, open('answer.json', 'w'))
     try:
         response = requests.get(
-            'http://s.ehejun.com/getexam.php?user_id={}&exam_type=1430'.format(
+            'http://s.ehejun.com/getexam.php?user_id={}&exam_type=1630'.format(
                 user_id))
     except Exception as e:
         continue
